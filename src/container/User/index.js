@@ -51,6 +51,39 @@ class User extends Component {
       });
     }
   }
+  returnFileList() {
+    if (this.state.currentFolder === '' && Object.keys(this.state.folderStructure).length != 0) {
+      return this.state.folderStructure.homeFiles.map(item => {
+        const itemFormat = item.replace('/', '');
+        return (
+          <div className="collection z-depth-2">
+            <a key={item} className="collection-item">
+              <div class="valign-wrapper">
+                <i className="material-icons left">insert_drive_file</i>
+                {itemFormat}
+              </div>
+            </a>
+          </div>
+        );
+      });
+    } else if (Object.keys(this.state.folderStructure).length != 0) {
+      // console.log(this.state.folderStructure[this.state.currentFolder].files);
+      return this.state.folderStructure[this.state.currentFolder].files.map(item => {
+        let itemFormat = item.replace(`${this.state.currentFolder}`, '');
+        itemFormat = itemFormat.replace('/', '');
+        return (
+          <div className="collection z-depth-2">
+            <a key={item} className="collection-item">
+              <div class="valign-wrapper">
+                <i className="material-icons left">insert_drive_file</i>
+                {itemFormat}
+              </div>
+            </a>
+          </div>
+        );
+      });
+    }
+  }
   renderSubFolders(item) {
     console.log(item);
     this.setState({
@@ -84,6 +117,7 @@ class User extends Component {
               </div>
               <div className="card-content margin-collection black-text">
                 {this.returnFolderList()}
+                {this.returnFileList()}
               </div>
             </div>
           </div>
