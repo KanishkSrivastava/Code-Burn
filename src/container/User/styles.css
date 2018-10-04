@@ -1,0 +1,11 @@
+.sideNav{ 
+    height: 100vh;
+    overflow: auto
+}
+.margin-collection{
+    padding:0px !important;
+    padding-right: 10px
+}
+.inputFieldPadding{
+    padding: 20px;
+}
