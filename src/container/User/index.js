@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './styles.css';
+import FolderStructure from './FolderStructure';
 import { fetchAllFileName } from './action';
 class User extends Component {
   constructor(props) {
@@ -17,78 +18,6 @@ class User extends Component {
         folderStructure: nextProps.user.folderStructure.data
       });
     }
-  }
-  returnFolderList() {
-    if (this.state.currentFolder === '' && Object.keys(this.state.folderStructure).length != 0) {
-      // console.log(this.state.folderStructure.homeFolders);
-      return this.state.folderStructure.homeFolders.map(item => {
-        const itemFormat = item.replace('/', '');
-        return (
-          <div className="collection z-depth-2">
-            <a key={item} className="collection-item" onClick={() => this.renderSubFolders(item)}>
-              <div class="valign-wrapper">
-                <i className="material-icons left">folder_open</i>
-                {itemFormat}
-              </div>
-            </a>
-          </div>
-        );
-      });
-    } else if (Object.keys(this.state.folderStructure).length != 0) {
-      return this.state.folderStructure[this.state.currentFolder].folders.map(item => {
-        let itemFormat = item.replace(`${this.state.currentFolder}`, '');
-        itemFormat = itemFormat.replace('/', '');
-        return (
-          <div className="collection z-depth-2">
-            <a key={item} className="collection-item" onClick={() => this.renderSubFolders(item)}>
-              <div class="valign-wrapper">
-                <i className="material-icons left">folder_open</i>
-                {itemFormat}
-              </div>
-            </a>
-          </div>
-        );
-      });
-    }
-  }
-  returnFileList() {
-    if (this.state.currentFolder === '' && Object.keys(this.state.folderStructure).length != 0) {
-      return this.state.folderStructure.homeFiles.map(item => {
-        const itemFormat = item.replace('/', '');
-        return (
-          <div className="collection z-depth-2">
-            <a key={item} className="collection-item">
-              <div class="valign-wrapper">
-                <i className="material-icons left">insert_drive_file</i>
-                {itemFormat}
-              </div>
-            </a>
-          </div>
-        );
-      });
-    } else if (Object.keys(this.state.folderStructure).length != 0) {
-      // console.log(this.state.folderStructure[this.state.currentFolder].files);
-      return this.state.folderStructure[this.state.currentFolder].files.map(item => {
-        let itemFormat = item.replace(`${this.state.currentFolder}`, '');
-        itemFormat = itemFormat.replace('/', '');
-        return (
-          <div className="collection z-depth-2">
-            <a key={item} className="collection-item">
-              <div class="valign-wrapper">
-                <i className="material-icons left">insert_drive_file</i>
-                {itemFormat}
-              </div>
-            </a>
-          </div>
-        );
-      });
-    }
-  }
-  renderSubFolders(item) {
-    console.log(item);
-    this.setState({
-      currentFolder: item
-    });
   }
   backButton() {
     let folderName = this.state.currentFolder;
@@ -116,8 +45,7 @@ class User extends Component {
                 Back
               </div>
               <div className="card-content margin-collection black-text">
-                {this.returnFolderList()}
-                {this.returnFileList()}
+                <FolderStructure />
               </div>
             </div>
           </div>
